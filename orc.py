@@ -5,8 +5,8 @@ def hihat(amp, length):
         return dsp.pad('', 0, length)
 
     def hat(length):
-        lowf = dsp.rand(6000, 11000)
-        highf = dsp.rand(11000, 17000)
+        lowf = dsp.rand(600, 7000)
+        highf = dsp.rand(7000, 19000)
         
         if dsp.randint(0, 6) == 0:
             out = dsp.bln(length, lowf, highf)
@@ -78,7 +78,7 @@ def clap(amp, length):
 
     return out
 
-def rhodes(total_time, freq=220.0):
+def rhodes(total_time, freq=220.0, ampscale=0.5):
     partials = [
             # Multiple, amplitude, duration
             [1, 0.6, 1.0], 
@@ -89,7 +89,7 @@ def rhodes(total_time, freq=220.0):
 
     layers = []
     for plist in partials:
-        partial = dsp.tone(freq=plist[0] * freq, length=total_time, amp=plist[1] * 0.5)
+        partial = dsp.tone(freq=plist[0] * freq, length=total_time, amp=plist[1] * ampscale)
 
         env_length = (total_time * plist[2] * 2) / 32 
         wtable = dsp.wavetable('hann', int(env_length))
